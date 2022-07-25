@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlogList from './BlogList';
 // import {useRef} from 'react';
 
@@ -6,17 +6,23 @@ const Home = () => {
 
     // const inputRef = useRef(null);
     
-    const [blogs, setBlogs] = useState([
-        {title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1},
-        {title: 'nvm vue hs', body: 'lorem ipsum...', author: 'yoshi', id: 2},
-        {title: 'react course', body: 'lorem ipsum...', author: 'diego', id: 3}
+    const [blogs, setBlogs] = useState(null);
 
-    ]);
+    // const handleDelete = (id) => {
+    //     const newBlogs = blogs.filter(blog => blog.id !== id)
+    //     setBlogs(newBlogs);
+    // };
 
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter(blog => blog.id !== id)
-        setBlogs(newBlogs);
-    }
+    useEffect(() => {
+        fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                setBlogs(data);
+            })
+    }, [] );
 
     // const [valuee, setValue] = useState('diego');
 
@@ -39,10 +45,10 @@ const Home = () => {
         <div className="home">
             <h2>Homepage</h2>
 
-            <BlogList blogs={blogs} handleDelete={handleDelete}/>
+           {blogs &&  <BlogList blogs={blogs}/>}
 
-
-            <BlogList blogs={blogs.filter((blog) => blog.author === 'diego')}  />
+{/* 
+            <BlogList blogs={blogs.filter((blog) => blog.author === 'diego')}  /> */}
             {/* {valuee} */}
 {/* 
             <div id="searchDta">your searched for - {valuee}</div> */}
