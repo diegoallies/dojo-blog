@@ -1,10 +1,10 @@
 import { useState } from "react";
 import BlogList from './BlogList';
-import {useRef} from 'react';
+// import {useRef} from 'react';
 
 const Home = () => {
 
-    const inputRef = useRef(null);
+    // const inputRef = useRef(null);
     
     const [blogs, setBlogs] = useState([
         {title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1},
@@ -13,11 +13,16 @@ const Home = () => {
 
     ]);
 
-    const [valuee, setValue] = useState('diego');
-
-    const handleChange = event => {
-        document.getElementById('searchDta')
+    const handleDelete = (id) => {
+        const newBlogs = blogs.filter(blog => blog.id !== id)
+        setBlogs(newBlogs);
     }
+
+    // const [valuee, setValue] = useState('diego');
+
+    // const handleChange = event => {
+    //     document.getElementById('searchDta')
+    // }
 
     // const [name, setName] = useState('luigi');
 
@@ -34,11 +39,11 @@ const Home = () => {
         <div className="home">
             <h2>Homepage</h2>
 
-            <BlogList blogs={blogs}  />
+            <BlogList blogs={blogs} handleDelete={handleDelete}/>
 
 
-            {/* <BlogList blogs={blogs.filter((blog) => blog.author === 'diego')}  />
-            {valuee} */}
+            <BlogList blogs={blogs.filter((blog) => blog.author === 'diego')}  />
+            {/* {valuee} */}
 {/* 
             <div id="searchDta">your searched for - {valuee}</div> */}
             {/* {blogs.map((blog) =>  (
